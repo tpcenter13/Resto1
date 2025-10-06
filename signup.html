@@ -368,73 +368,47 @@
             
             <!-- Signup Form -->
             <form id="signupForm">
-                <div class="form-floating">
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="fullname" 
-                        placeholder="John Doe"
-                        required
-                        minlength="2"
-                    />
-                    <label for="fullname">Full Name</label>
-                </div>
-                
-                <div class="form-floating">
-                    <input 
-                        type="email" 
-                        class="form-control" 
-                        id="email" 
-                        placeholder="your@email.com"
-                        required
-                    />
-                    <label for="email">Email Address</label>
-                </div>
-                
-                <div class="form-floating">
-                    <input 
-                        type="password" 
-                        class="form-control" 
-                        id="password" 
-                        placeholder="Password"
-                        required
-                        minlength="8"
-                    />
-                    <label for="password">Password</label>
-                </div>
-                
-                <div class="password-strength" id="passwordStrength" style="display: none;">
-                    <div class="strength-bar">
-                        <div class="strength-fill" id="strengthFill"></div>
-                    </div>
-                    <div class="strength-text" id="strengthText"></div>
-                </div>
-                
-                <div class="form-floating">
-                    <input 
-                        type="password" 
-                        class="form-control" 
-                        id="confirmPassword" 
-                        placeholder="Confirm Password"
-                        required
-                    />
-                    <label for="confirmPassword">Confirm Password</label>
-                </div>
-                
-                <div class="password-match" id="passwordMatch"></div>
-                
-                <div class="terms-checkbox">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">
-                        I agree to the <a href="#" onclick="alert('Terms of Service would be linked here')">Terms of Service</a> 
-                        and <a href="#" onclick="alert('Privacy Policy would be linked here')">Privacy Policy</a>
-                    </label>
-                </div>
-                
-                <button type="submit" class="btn btn-signup" id="signupBtn" disabled>
-                    <i class="fas fa-user-plus me-2"></i>Create Account
-                </button>
-            </form>
+  <input type="text" id="fullname" placeholder="Full Name" required />
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <button type="submit">Sign Up</button>
+</form>
+
+<script>
+  document.getElementById('signupForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const formData = {
+    fullname: document.getElementById('fullname').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    password: document.getElementById('password').value
+  };
+
+  try {
+    const response = await fetch("http://localhost:3000/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(result.message);
+      // optionally redirect:
+      // window.location.href = "login.html";
+    } else {
+      alert(result.message || "Signup failed");
+    }
+
+  } catch (error) {
+    console.error("❌ Connection error:", error);
+    alert("Connection failed. Make sure your backend server is running.");
+  }
+});
+
+</script>
+
             
             <!-- Login Link -->
             <div class="login-link">

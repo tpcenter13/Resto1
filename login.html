@@ -339,37 +339,56 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Form submission handling
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Basic validation
-            if (!email || !password) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            // Here you would typically send the data to your backend
-            console.log('Login attempt:', { email, password });
-            alert('Login functionality would be implemented here.\nEmail: ' + email);
-            
-            // For demo purposes, redirect to main page
-            // window.location.href = 'index.html';
-        });
-        
-        // Add some interactive effects
-        document.querySelectorAll('.form-control').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.02)';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
-        });
-    </script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  if (!email || !password) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(`Welcome back, ${result.fullname}!`);
+      
+      // ✅ Store user info for session
+      localStorage.setItem("user", JSON.stringify(result));
+      
+      // ✅ Redirect to dashboard instead of index
+      window.location.href = "dashboard.html";
+    } else {
+      alert(result.message || "Invalid email or password");
+    }
+
+  } catch (error) {
+    console.error("❌ Connection error:", error);
+    alert("Connection failed. Make sure your backend server is running.");
+  }
+});
+
+// Optional: small animation for inputs
+document.querySelectorAll('.form-control').forEach(input => {
+  input.addEventListener('focus', function() {
+    this.parentElement.style.transform = 'scale(1.02)';
+  });
+  
+  input.addEventListener('blur', function() {
+    this.parentElement.style.transform = 'scale(1)';
+  });
+});
+</script>
+
+
 </body>
 </html>
