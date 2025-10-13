@@ -221,10 +221,6 @@ if (!isset($_SESSION['fullname'])) {
             background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
         }
         
-        .stat-card:nth-child(4) .stat-icon {
-            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
-        }
-        
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
@@ -281,11 +277,12 @@ if (!isset($_SESSION['fullname'])) {
         .activity-details h4 {
             font-size: 1rem;
             margin-bottom: 0.25rem;
+            color: #ffffff;
         }
         
         .activity-details p {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.7);
             margin: 0;
         }
         
@@ -368,10 +365,6 @@ if (!isset($_SESSION['fullname'])) {
                 <i class="fas fa-shopping-cart"></i>
                 <span>My Orders</span>
             </a>
-            <a href="#" class="nav-item" onclick="showSection('reservations')">
-                <i class="fas fa-calendar-check"></i>
-                <span>Reservations</span>
-            </a>
             <a href="#" class="nav-item" onclick="showSection('favorites')">
                 <i class="fas fa-heart"></i>
                 <span>Favorites</span>
@@ -423,13 +416,6 @@ if (!isset($_SESSION['fullname'])) {
             </div>
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-calendar"></i>
-                </div>
-                <div class="stat-value">5</div>
-                <div class="stat-label">Reservations</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
                     <i class="fas fa-star"></i>
                 </div>
                 <div class="stat-value">8</div>
@@ -452,20 +438,20 @@ if (!isset($_SESSION['fullname'])) {
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="activity-details">
-                        <h4>Reservation Confirmed</h4>
-                        <p>Table for 4 on Oct 15, 2025 at 7:00 PM</p>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon">
                         <i class="fas fa-heart"></i>
                     </div>
                     <div class="activity-details">
                         <h4>New Favorite Added</h4>
                         <p>You added Adobo to your favorites - Yesterday</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>Order Placed</h4>
+                        <p>Order #1235 is being prepared - 3 days ago</p>
                     </div>
                 </div>
             </div>
@@ -477,13 +463,6 @@ if (!isset($_SESSION['fullname'])) {
                     <div>
                         <strong>Place New Order</strong>
                         <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin: 0;">Browse our menu</p>
-                    </div>
-                </button>
-                <button class="quick-action-btn" onclick="alert('Reservation feature coming soon!')">
-                    <i class="fas fa-calendar-plus"></i>
-                    <div>
-                        <strong>Make Reservation</strong>
-                        <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin: 0;">Book a table</p>
                     </div>
                 </button>
                 <button class="quick-action-btn" onclick="alert('Menu feature coming soon!')">
