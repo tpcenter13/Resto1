@@ -544,23 +544,51 @@
         document.getElementById('terms').addEventListener('change', validateForm);
         
         // Form submission
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                fullname: document.getElementById('fullname').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                password: document.getElementById('password').value,
-                confirmPassword: document.getElementById('confirmPassword').value,
-                terms: document.getElementById('terms').checked
-            };
-            
-            console.log('Signup attempt:', formData);
-            alert('Account created successfully!\nWelcome to Kultura Cuisine family!');
-            
-            // For demo purposes
-            // window.location.href = 'index.html';
+      // Form submission
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const signupBtn = document.getElementById('signupBtn');
+    const originalText = signupBtn.innerHTML;
+    
+    // Disable button and show loading state
+    signupBtn.disabled = true;
+    signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+    
+    const formData = {
+        fullname: document.getElementById('fullname').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value,
+        terms: document.getElementById('terms').checked
+    };
+    
+    try {
+        const response = await fetch('backend/signup_process.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
         });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            window.location.href = result.redirect;
+        } else {
+            alert('Error: ' + result.message);
+            signupBtn.disabled = false;
+            signupBtn.innerHTML = originalText;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        signupBtn.disabled = false;
+        signupBtn.innerHTML = originalText;
+    }
+});
         
         // Add interactive effects
         document.querySelectorAll('.form-control').forEach(input => {
